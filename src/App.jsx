@@ -99,7 +99,8 @@ const LegalAndPrivacy = () => {
       {/* Form Section */}
       <div className='z-10 w-full px-4 lg:w-1/2'>
         <form
-          action='https://getform.io/f/ajjmneya'
+          action='https://script.google.com/macros/s/AKfycbx-MPk0XRVgz71rmxcxp9deUHOsu-Iz8KVBVyibFrnMixdBufLmRcrfes6PccSsxYNt/exec'
+          //action='https://getform.io/f/ajjmneya'
           method='POST'
           className='w-full flex flex-col lg:flex-row justify-center items-center gap-3'
         >
