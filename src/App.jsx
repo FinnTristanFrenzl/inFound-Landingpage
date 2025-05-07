@@ -2,6 +2,35 @@ import React, { useState } from 'react'
 import bgImg from '../src/assets/background_Image.png'
 
 const App = () => {
+  const [submitted, setSubmitted] = useState(false)
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState(''); // Optionales Feedback
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('Sending...');
+
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbx-MPk0XRVgz71rmxcxp9deUHOsu-Iz8KVBVyibFrnMixdBufLmRcrfes6PccSsxYNt/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ email }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true)
+        setStatus('Thanks for signing up!');
+        setEmail('');
+      } else {
+        setStatus('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setStatus('Error sending request.');
+    }
+  };
+
 
 
 const LegalAndPrivacy = () => {
@@ -38,19 +67,22 @@ const LegalAndPrivacy = () => {
 
           {/* Datenschutz */}
           <section>
-            <p className="font-bold">Privacy Policy</p>
-            <p>
-              This website collects personal data (email address) only when users voluntarily submit it through the waitlist form.
-              The email is processed by <strong>Getform</strong> and used solely for the purpose of providing product updates.
-            </p>
-            <p>
-              <strong>Analytics:</strong><br />
-              We use Google Analytics to analyze website usage. IP anonymization is enabled. No personal data is shared.
-            </p>
-            <p>
-              <strong>Your Rights:</strong><br />
-              You may request information about your stored data at any time and ask for correction or deletion. For any concerns, contact us at the email above.
-            </p>
+          <p>
+            This website collects personal data (email address) only when users voluntarily submit it through the waitlist form.
+            The email is processed via <strong>Google Sheets</strong> using a connected script and is used solely for providing product updates.
+          </p>
+          <p>
+            <strong>GDPR Notice:</strong><br />
+            All submitted emails are stored directly in a connected Google Sheet. Please do not submit any sensitive personal data (e.g., health, financial, or identifying documents), as this method is not intended for long-term storage of such information. Collected emails are used solely for providing product updates and are processed in accordance with the GDPR.
+          </p>
+          <p>
+            <strong>Analytics:</strong><br />
+            We use Google Analytics to analyze website usage. IP anonymization is enabled. No personal data is shared.
+          </p>
+          <p>
+            <strong>Your Rights:</strong><br />
+            You may request information about your stored data at any time and ask for correction or deletion. For any concerns, contact us at the email above.
+          </p>
           </section>
 
         </div>
@@ -60,7 +92,7 @@ const LegalAndPrivacy = () => {
 };
 
   return (
-    <div className='bg-[#0a0c0e] text-[#f1f2f2] flex flex-col items-center min-h-screen min-w-full relative'>
+    <div className='bg-[#0a0c0e] text-[#f1f2f2] flex flex-col items-center min-h-screen w-full relative'>
       
       {/* Navbar */}
       <div className='bg-[#0e1725] w-full h-16 flex items-center px-4 lg:pl-40'>
@@ -98,35 +130,39 @@ const LegalAndPrivacy = () => {
 
       {/* Form Section */}
       <div className='z-10 w-full px-4 lg:w-1/2'>
-        <form
-          action='https://script.google.com/macros/s/AKfycbx-MPk0XRVgz71rmxcxp9deUHOsu-Iz8KVBVyibFrnMixdBufLmRcrfes6PccSsxYNt/exec'
-          //action='https://getform.io/f/ajjmneya'
-          method='POST'
-          className='w-full flex flex-col lg:flex-row justify-center items-center gap-3'
+      <form
+        onSubmit={handleSubmit}
+        className='w-full flex flex-col lg:flex-row justify-center items-center gap-3'
+      >
+        <input
+          type='email'
+          name='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder='Enter your E-mail...'
+          required
+          className='shadow-2xl shadow-[#0e1725] outline-none w-full lg:flex-3 pl-6 py-4 bg-[#0e1725] text-lg lg:text-4xl rounded-xl text-[#f1f2f2] font-bold focus:border-transparent appearance-none'
+          style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
+        />
+        <button
+          disabled={submitted}
+          type='submit'
+          className='w-full lg:flex-1 px-6 py-4 bg-[#a2b3ce] rounded-xl text-[#0a0c0e] text-lg lg:text-[1.5rem] font-bold hover:shadow-2xl hover:shadow-[#a2b3ce]/30 hover:-translate-y-1 transition-all duration-200'
         >
-          <input
-            type='email'
-            name='email'
-            placeholder='Enter your E-mail...'
-            required
-            className='shadow-2xl shadow-[#0e1725] outline-none w-full lg:flex-3 pl-6 py-4 bg-[#0e1725] text-lg lg:text-4xl rounded-xl text-[#f1f2f2] font-bold focus:border-transparent appearance-none'
-            style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
-          />
-          <button
-            type='submit'
-            className='w-full lg:flex-1 px-6 py-4 bg-[#a2b3ce] rounded-xl text-[#0a0c0e] text-lg lg:text-[1.5rem] font-bold hover:shadow-2xl hover:shadow-[#a2b3ce]/30 hover:-translate-y-1 transition-all duration-200'
-          >
-            Join Waitlist
-          </button>
-        </form>
+          Join Waitlist
+        </button>
+      </form>
+
+      {status && <p className='mt-4 text-center text-2xl font-bold' style={{color: status === 'Thanks for signing up!' && 'green'}}>{status}</p>}
+
         <h3 className='text-center mt-4 text-sm'>It's free, no credit card is needed.</h3>
       </div>
       <div className='z-0 absolute bottom-20 right-40'>
         <img src={bgImg} alt=""/>
       </div>
-      <div className='absolute bottom-4 left-2'>
+      <footer className='absolute bottom-2 left-2'>
         <LegalAndPrivacy />
-      </div>
+      </footer>
     </div>
     
   )
