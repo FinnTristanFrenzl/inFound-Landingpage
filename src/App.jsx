@@ -5,33 +5,47 @@ const App = () => {
   const [submitted, setSubmitted] = useState(false)
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState(''); // Optionales Feedback
+  const [botcheck, setBotcheck] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('Sending...');
-
-    try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbx-MPk0XRVgz71rmxcxp9deUHOsu-Iz8KVBVyibFrnMixdBufLmRcrfes6PccSsxYNt/exec', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({ email }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true)
-        setStatus('Thanks for signing up!');
-        setEmail('');
-      } else {
-        setStatus('Something went wrong. Please try again.');
+    
+  
+    if (!submitted) {
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyKZR-U0AENToGn3WFUl6emOLzBOtAkB6LcB20Ss9y_4ee5hiZvXq-8dkHHCbHMIqc/exec', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({ email, 'bot-check': botcheck }),
+        });
+        
+        const data = await response.json()
+        setSubmitted(true);
+        
+        if (response.ok && data.reason === 'email_registered') {
+            setStatus("Thanks for signing up!");
+            setEmail('');
+        } else {
+          // Wenn der Fehlerstatus 409 zurückkommt (bereits registrierte E-Mail)
+          if (data.reason === 'email_exists') {
+            setStatus('This email is already registered.');
+          } else if (data.reason === 'bot_detect'){
+            setStatus('Bot detected. Please try again.');
+          }
+        }
+      } catch (err) {
+          setStatus('Something went wrong...');
+      } finally {
+          setTimeout(() => {
+            setSubmitted(false);
+          }, 3000)
       }
-    } catch (err) {
-      setStatus('Error sending request.');
+    };
     }
-  };
-
-
+  
 
 const LegalAndPrivacy = () => {
   const [visible, setVisible] = useState(false);
@@ -134,7 +148,7 @@ const LegalAndPrivacy = () => {
         onSubmit={handleSubmit}
         className='w-full flex flex-col lg:flex-row justify-center items-center gap-3'
       >
-        <input type="text" name="bot-check" style={{display: 'none'}} aria-hidden="true" />
+        <input value={botcheck} onChange={(e) => setBotcheck(e.target.value)} type="text" name="bot-check" style={{display: 'none'}} aria-hidden="true" />
         <input
           type='email'
           name='email'
@@ -146,7 +160,6 @@ const LegalAndPrivacy = () => {
           style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
         />
         <button
-          disabled={submitted}
           type='submit'
           className='w-full lg:flex-1 px-6 py-4 bg-[#a2b3ce] rounded-xl text-[#0a0c0e] text-lg lg:text-[1.5rem] font-bold hover:shadow-2xl hover:shadow-[#a2b3ce]/30 hover:-translate-y-1 transition-all duration-200'
         >
