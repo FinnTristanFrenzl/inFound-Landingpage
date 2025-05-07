@@ -134,7 +134,7 @@ const LegalAndPrivacy = () => {
         onSubmit={handleSubmit}
         className='w-full flex flex-col lg:flex-row justify-center items-center gap-3'
       >
-        <input type="text" name="bot-check" style="display:none" aria-hidden="true" />
+        <input type="text" name="bot-check" style={{display: 'none'}} aria-hidden="true" />
         <input
           type='email'
           name='email'
