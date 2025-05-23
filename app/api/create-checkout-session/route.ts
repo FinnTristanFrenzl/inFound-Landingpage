@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: 'payment',
-      return_url: `https://infound.app/api/session-status?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `https://www.infound.app/api/session-status?session_id={CHECKOUT_SESSION_ID}`,
       automatic_tax: { enabled: true },
       metadata: {
         feature_id: data.id
