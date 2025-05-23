@@ -1,13 +1,46 @@
-import React, { useState } from 'react'
-import bgImg from '../src/assets/background_Image.png'
+"use client"
+
+type featureType = {
+  id: UUID,
+  created_at: Timestamp,
+  title: string,
+  description: string,
+  current: number,
+  goal: number
+}
+
+import React, { FormEvent, useEffect, useState } from 'react'
+import bgImg from '../public/background_Image.png'
+import FeatureCard from './(components)/FeatureCard'
+import SuggestFeature from './(components)/SuggestFeature'
+import Image from 'next/image'
+import { supabase } from '@/supabaseClient/supabase'
+import { UUID } from 'crypto'
+import { Timestamp } from 'next/dist/server/lib/cache-handlers/types'
 
 const App = () => {
   const [submitted, setSubmitted] = useState(false)
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState(''); // Optionales Feedback
   const [botcheck, setBotcheck] = useState('')
+  const [features, setFeatures] = useState<featureType[]>([])
 
-  const handleSubmit = async (e) => {
+  const getFeatures = async () => {
+    const {data, error} = await supabase.from('landing_features').select('*')
+    if (error) {
+      console.log(error)
+      return
+    }
+    setFeatures(data)
+    return
+  }
+
+  useEffect(() => {
+    getFeatures()
+  }, [])
+
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus('Sending...');
     
@@ -37,6 +70,7 @@ const App = () => {
           }
         }
       } catch (err) {
+          console.log(err)
           setStatus('Something went wrong...');
       } finally {
           setTimeout(() => {
@@ -109,11 +143,12 @@ const LegalAndPrivacy = () => {
     <div className='bg-[#0a0c0e] text-[#f1f2f2] flex flex-col items-center min-h-screen w-full relative'>
       
       {/* Navbar */}
-      <div className='bg-[#0e1725] w-full h-16 flex items-center px-4 lg:pl-40'>
+      {/* <div className='bg-[#0e1725] w-full h-16 flex items-center px-4 lg:pl-40'>
         <h1 className='text-xl lg:text-2xl font-bold'>
           <span className='text-[#4a7ece] underline'>in</span>Found
         </h1>
-      </div>
+      </div> */}
+      
 
       {/* Headline Section */}
       <div className='pb-20 pt-12 w-full max-w-[80%] flex flex-col items-center z-10'>
@@ -145,7 +180,7 @@ const LegalAndPrivacy = () => {
       {/* Form Section */}
       <div className='z-10 w-full px-4 lg:w-1/2'>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         className='w-full flex flex-col lg:flex-row justify-center items-center gap-3'
       >
         <input value={botcheck} onChange={(e) => setBotcheck(e.target.value)} type="text" name="bot-check" style={{display: 'none'}} aria-hidden="true" />
@@ -167,17 +202,45 @@ const LegalAndPrivacy = () => {
         </button>
       </form>
 
-      {status && <p className='mt-4 text-center text-2xl font-bold' style={{color: status === 'Thanks for signing up!' && 'green'}}>{status}</p>}
+      {status && <p className='mt-4 text-center text-2xl font-bold' style={{color: status === 'Thanks for signing up!' ? 'green' : ''}}>{status}</p>}
 
-        <h3 className='text-center mt-4 text-sm'>It's free, no credit card is needed.</h3>
+        <h3 className='text-center mt-4 text-sm'>It&apos;s free, no credit card is needed.</h3>
       </div>
-      <div className='z-0 absolute bottom-20 right-40'>
-        <img src={bgImg} alt=""/>
-      </div>
-      <footer className='absolute bottom-2 left-2'>
-        <LegalAndPrivacy />
-      </footer>
-    </div>
+
+
+      <div className='mt-14 sm:mt-18 pb-4 pt-4 sm:pt-6 w-full px-4 sm:px-0 flex flex-col items-center z-10'>
+  <h1 className='text-center text-2xl sm:text-4xl lg:text-[3.8rem] font-bold leading-tight'>
+    <span className='bg-gradient-to-r to-[#4a7ece] from-[#a2b3ce] bg-clip-text text-transparent'>
+      Fund a Feature is here!
+    </span>
+  </h1>
+</div>
+
+
+<div className='w-full px-4 sm:px-0 max-w-4xl mx-auto'>
+  <h2 className='text-center text-sm sm:text-base lg:text-[1.3rem] leading-relaxed'>
+    <span className='font-bold'>
+      You can now fund features that I should build! 🫶
+    </span>{' '}
+    So you can have the best version of inFound when it launches!
+  </h2>
+</div>
+
+<div className='mt-6 mb-12 w-8/10 px-4 sm:px-0 flex flex-col md:flex-row flex-wrap justify-center gap-6'>
+  {features && features.map(feature => {
+    return <FeatureCard key={feature.id} goal={feature.goal / 100} current={feature.current / 100} title={feature.title} description={feature.description} feature_id={feature.id}/>
+  })}
+  <SuggestFeature />
+</div>
+
+  {/* ........ */}
+  <div className='z-0 absolute top-90 right-40'>
+    <Image src={bgImg} alt=''/>
+  </div>
+  <footer className='absolute bottom-2 left-2'>
+    <LegalAndPrivacy />
+  </footer>
+</div>
     
   )
 }
