@@ -5,7 +5,7 @@ import { UUID } from 'crypto';
 const FeatureCard = ({title, description, goal, current, feature_id}: {title: string, description: string, goal: number, current: number, feature_id: UUID}) => {
 
   return (
-    <form action={`/checkout?id=${feature_id}`} method='POST' className='border-white text-center bg-[#0e1725] border-4 flex-1 px-6 py-10 sm:px-8 sm:py-12 md:px-10 md:py-16 rounded-2xl flex flex-col gap-4 hover:border-[#0e1725] hover:bg-white hover:text-[#0e1725] transition-all duration-200 text-white'>
+    <form action={`/checkout?id=${feature_id}`} method='GET' className='border-white text-center bg-[#0e1725] border-4 flex-1 px-6 py-10 sm:px-8 sm:py-12 md:px-10 md:py-16 rounded-2xl flex flex-col gap-4 hover:border-[#0e1725] hover:bg-white hover:text-[#0e1725] transition-all duration-200 text-white'>
         <h1 className='mb-3 text-2xl sm:text-3xl font-bold underline'>{title}</h1>
         <p className='text-sm sm:text-base font-medium'>
             {description}
