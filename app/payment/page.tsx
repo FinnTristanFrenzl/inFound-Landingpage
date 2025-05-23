@@ -13,7 +13,6 @@ const Page = () => {
       <PageContent />
     </Suspense>
   )
-  
 }
 
 const PageContent = () => {
