@@ -12,5 +12,5 @@ export async function GET(req: NextRequest) {
   const sessionID = searchParams.get('session_id');
 
     const session = await stripe.checkout.sessions.retrieve(sessionID!)
-    return NextResponse.redirect(`http://localhost:3000/payment?session_id=${sessionID}&status=${session.status}`)
+    return NextResponse.redirect(`https://infound.app/payment?session_id=${sessionID}&status=${session.status}`)
 }
