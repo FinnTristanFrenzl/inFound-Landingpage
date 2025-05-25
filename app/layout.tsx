@@ -33,7 +33,7 @@ export default function RootLayout({
           <h1 className='text-xl lg:text-2xl font-bold text-white'>
             <span className='text-[#4a7ece] underline'>in</span>Found
           </h1>
-          <div className="text-white font-bold flex">
+          <div className="text-white font-bold flex gap-1">
               <Award size={24} color="#FFFFFF" /> Fund A Feature is here! 
           </div>
         </div>
