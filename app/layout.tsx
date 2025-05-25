@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Award } from "@deemlol/next-icons";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +29,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
           {/* Navbar */}
-        <div className='bg-[#0e1725] w-full h-16 flex items-center px-4 lg:pl-40'>
+        <div className='bg-[#0e1725] w-full h-16 flex items-center justify-between px-4 lg:px-40'>
           <h1 className='text-xl lg:text-2xl font-bold text-white'>
             <span className='text-[#4a7ece] underline'>in</span>Found
           </h1>
+          <div className="text-white font-bold flex">
+              <Award size={24} color="#FFFFFF" /> Fund A Feature is here! 
+          </div>
         </div>
         {children}
       </body>

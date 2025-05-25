@@ -141,7 +141,6 @@ const LegalAndPrivacy = () => {
 
   return (
     <div className='bg-[#0a0c0e] text-[#f1f2f2] flex flex-col items-center min-h-screen w-full relative'>
-      
       {/* Navbar */}
       {/* <div className='bg-[#0e1725] w-full h-16 flex items-center px-4 lg:pl-40'>
         <h1 className='text-xl lg:text-2xl font-bold'>
