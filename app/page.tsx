@@ -11,8 +11,8 @@ type featureType = {
 
 import React, { FormEvent, useEffect, useState } from 'react'
 import bgImg from '../public/background_Image.png'
-import FeatureCard from './(components)/FeatureCard'
-import SuggestFeature from './(components)/SuggestFeature'
+import FeatureCard from './(landing_components)/FeatureCard'
+import SuggestFeature from './(landing_components)/SuggestFeature'
 import Image from 'next/image'
 import { supabase } from '@/supabaseClient/supabase'
 import { UUID } from 'crypto'
@@ -59,7 +59,7 @@ const App = () => {
         setSubmitted(true);
         
         if (response.ok && data.reason === 'email_registered') {
-            setStatus("Thanks for signing up!");
+            setStatus("Thanks for signing up! Go check out our Fund a Feature Section below ⬇️");
             setEmail('');
         } else {
           // Wenn der Fehlerstatus 409 zurückkommt (bereits registrierte E-Mail)
@@ -150,23 +150,18 @@ const LegalAndPrivacy = () => {
       
 
       {/* Headline Section */}
-      <div className='pb-20 pt-12 w-full max-w-[80%] flex flex-col items-center z-10'>
-        <h1 className='text-center text-4xl lg:text-[4.8rem] font-bold leading-tight'>
+      <div className='lg:pb-20 pb-14 pt-8 lg:pt-12 lg:max-w-[80%] w-[90%] flex flex-col items-center z-10'>
+        <h1 className='text-center text-[2.1rem] lg:text-[4.8rem] font-bold leading-tight'>
           Find{' '}
           <span className='bg-gradient-to-r to-[#4a7ece] from-[#a2b3ce] bg-clip-text text-transparent'>
             Profitable Saas
           </span>{' '}
-          Ideas from Real Reddit Posts —{' '}
-          <span
-            className='text-transparent block lg:inline font-bold lg:text-[4.5rem]'
-            style={{ WebkitTextStroke: '1.5px white' }}
-          >
-            in Seconds
-          </span>
+          Ideas from Real Reddit Posts
+          
         </h1>
 
-        <div className='w-full lg:w-1/2 mt-6 px-4'>
-          <h2 className='text-center text-base lg:text-[1.3rem] leading-relaxed'>
+        <div className='max-w-[90%] lg:w-1/2 lg:mt-6 lg:px-4 mt-4'>
+          <h2 className='text-center text-[1.1rem] text-base lg:text-[1.3rem] leading-relaxed'>
             👋 Say Goodbye to hours of searching for Saas ideas.{' '}
             <span className='font-bold'>
               Discover real-world problems people are begging to solve
@@ -201,14 +196,14 @@ const LegalAndPrivacy = () => {
         </button>
       </form>
 
-      {status && <p className='mt-4 text-center text-2xl font-bold' style={{color: status === 'Thanks for signing up!' ? 'green' : ''}}>{status}</p>}
+      {status && <p className='mt-4 text-center text-2xl font-bold' style={{color: status === 'Thanks for signing up! Go check out our Fund a Feature Section below ⬇️' ? 'green' : 'white'}}>{status}</p>}
 
         <h3 className='text-center mt-4 text-sm'>It&apos;s free, no credit card is needed.</h3>
       </div>
 
 
-      <div className='mt-14 sm:mt-18 pb-4 pt-4 sm:pt-6 w-full px-4 sm:px-0 flex flex-col items-center z-10'>
-  <h1 className='text-center text-2xl sm:text-4xl lg:text-[3.8rem] font-bold leading-tight'>
+      <div className='lg:mt-14 mt-11 sm:mt-18 pb-4 pt-4 sm:pt-6 w-full px-4 sm:px-0 flex flex-col items-center z-10'>
+  <h1 className='text-center text-3xl lg:text-[3.8rem] font-bold leading-tight'>
     <span className='bg-gradient-to-r to-[#4a7ece] from-[#a2b3ce] bg-clip-text text-transparent'>
       Fund a Feature is here!
     </span>
@@ -233,7 +228,7 @@ const LegalAndPrivacy = () => {
 </div>
 
   {/* ........ */}
-  <div className='z-0 absolute top-90 right-40'>
+  <div className='z-0 absolute top-120 right-44 lg:top-86'>
     <Image src={bgImg} alt=''/>
   </div>
   <footer className='absolute bottom-2 left-2'>
