@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/session-status/route.ts", "app/api/create-checkout-session/route.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/(landing_routes)/session-status/route.ts", "app/api/(landing_routes)/create-checkout-session/route.ts"],
   "exclude": ["node_modules"]
 }
