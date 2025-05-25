@@ -11,8 +11,8 @@ type featureType = {
 
 import React, { FormEvent, useEffect, useState } from 'react'
 import bgImg from '../public/background_Image.png'
-import FeatureCard from '@/app/(landing_components)/FeatureCard'
-import SuggestFeature from '@/app/(landing_components)/SuggestFeature'
+import FeatureCard from './(landing_components)/FeatureCard'
+import SuggestFeature from './(landing_components)/SuggestFeature'
 import Image from 'next/image'
 import { supabase } from '@/supabaseClient/supabase'
 import { UUID } from 'crypto'
