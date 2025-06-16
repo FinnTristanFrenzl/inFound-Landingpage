@@ -1,7 +1,22 @@
-import type { NextConfig } from "next";
+import { hostname } from "os"
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        pathname: '**'
+      },
+    ]
+  },
+}
 
-export default nextConfig;
+module.exports = nextConfig

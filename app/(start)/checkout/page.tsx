@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { BarLoader } from 'react-spinners';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
@@ -22,18 +23,34 @@ const PageContent = () => {
 
   const searchParams = useSearchParams()
   const feature_id = searchParams.get('id')!
+  const type = searchParams.get('type')
+  const access = searchParams.get('access')
+  const state = searchParams.get('state');
 
+
+  const router = useRouter()
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    // 1. Session anlegen und clientSecret holen
-    fetch(`/api/create-checkout-session?id=${feature_id}`, {
+   useEffect(() => {
+    fetch(`/api/create-checkout-session?type=${type}&access=${access}&id=${feature_id}&state=${state}`, {
       method: 'POST',
     })
-      .then(res => res.json())
-      .then(data => setClientSecret(data.clientSecret));
-      
-  }, [feature_id]);
+      .then(async res => {
+        if (!res.ok) {
+          const data = await res.json()
+
+          // Beispielhafte Weiterleitung bei fehlender Authentifizierung:
+          if (res.status === 401 || data.error === 'Not authenticated') {
+            router.push('/auth/login') // oder '/login'
+          }
+
+          return
+        }
+
+        const data = await res.json()
+        setClientSecret(data.clientSecret)
+      })
+  }, [feature_id, type, access])
 
   useEffect(() => {
     if (!clientSecret) return;

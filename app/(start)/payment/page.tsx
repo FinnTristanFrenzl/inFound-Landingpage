@@ -30,7 +30,7 @@ const PageContent = () => {
       </div>
       : <div className='bg-[#0e1725] text-white border-4 border-emerald-700 rounded-2xl py-22 px-28 flex flex-col items-center justify-between'>
         <Heart size={56} color="white"/>
-        <h1 className='text-4xl font-bold mt-12'>Thank you for helping us!</h1>
+        <h1 className='text-4xl font-bold mt-12 px-16'>You're all set!</h1>
         <Link className='mt-4 text-blue-400' href='/' >Return to Homepage</Link>
       </div>}
     </div>
