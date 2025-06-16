@@ -1,10 +1,13 @@
+import Demo from '@/components/Demo'
 import FeatureSection from '@/components/FeatureSection'
 import bgImg from '@/public/background_Image.png'
 import Image from 'next/image'
 
 import Link from 'next/link'
+import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 const App = () => {
 
+  
 
   return (
     <div className='bg-[#0a0c0e] text-[#f1f2f2] flex flex-col items-center min-h-screen w-full relative'>
@@ -47,7 +50,13 @@ const App = () => {
           >
             Find ideas!</Link>
         </div>
+      </div>
 
+      <div className='border-4 relative rounded-2xl border-[#a2b3ce] py-48 mt-24 w-[65%] flex flex-col justify-center items-center'>
+        <h1 className='absolute top-10 text-[4rem] font-bold text-[#a2b3ce]'>DEMO</h1>
+        <div className='z-10 w-[65%] flex justify-center items-center '>
+          <Demo />
+        </div>
       </div>
 
 

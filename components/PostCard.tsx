@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/client';
 import getUserData from '@/app/utils/getUserData';
 import { User } from '@supabase/supabase-js';
 import { RiAccountCircleFill } from "react-icons/ri";
+import Image from 'next/image';
 
 
 type Post = {
@@ -48,17 +49,17 @@ const PostCard = ({post, isSaved = false}: {post: Post, isSaved?: boolean}) => {
     const [isLiked, setIsLiked] = useState<boolean>(isSaved)
     //const [userData, setUserData] = useState<null | any>(null)
     
+    useEffect(() => {
+        if(post.state) {
+            fetchUserData()
+        }
+    }, [])
     
     useEffect(() => {
         setIsLiked(isSaved)
         getUser()
     }, [isSaved])
 
-    useEffect(() => {
-        if(post.state) {
-            fetchUserData()
-        }
-    }, [])
 
 
 
@@ -127,7 +128,7 @@ const PostCard = ({post, isSaved = false}: {post: Post, isSaved?: boolean}) => {
                         <Link href={`/join/${post.reddit_id}`} className='px-4 py-2 rounded-lg bg-[rgb(28,38,56)] hover:opacity-80 active:opacity-60 transition-all duration-150 font-bold text-white'>Join</Link>
                         <div className='rounded-full max-h-10 max-w-10'>
                             {userData?.avatar_url
-                            ? <img src={userData?.avatar_url} alt="" className='size-full rounded-full'/>
+                            ? <Image src={userData?.avatar_url} alt="" width={100} height={100} className='size-full rounded-full'/>
                             : <RiAccountCircleFill className='h-10 w-10' color='white'/>}
                         </div>    
                     </div>}

@@ -20,8 +20,11 @@ const page = async () => {
   }
 
   return (
-    <div className='relative h-[100vh] bg-[#0a0c0e]'>
-      <div className='size-full flex flex-col lg:flex-row justify-center items-center text-white gap-24'>
+    <div className='relative min-h-screen flex flex-col justify-center items-center gap-24 bg-[#0a0c0e]'>
+        <div className='text-white flex justify-center items-center text-2xl font-bold w-[60%] text-center'>
+          inFound is currently in a beta phase. Once the initial version launches, prices will increase. If you buy now, you will keep the current price even when prices will increase!
+        </div>
+      <div className='size-full flex flex-col lg:flex-row justify-center items-center text-white gap-24 pb-6'>
         <div style={{opacity: ['LITE', 'PRO', 'ELITE'].includes(userState) ? 0.5 : 1, pointerEvents: ['LITE', 'PRO', 'ELITE'].includes(userState) ? 'none' : 'all'}} className='py-12 border-2 rounded-2xl border-white bg-[#0e1725] z-100 max-w-110 w-full'>
           <h1 className='px-16 text-4xl font-bold text-white text-center'>
             <span className='text-[#4a7ece] underline'>in</span>Found {' '}
@@ -31,7 +34,7 @@ const page = async () => {
             <div className='border-t-1 mt-8 py-5 text-lg lg:text-xl font-bold'>
                 <ul className='mt-8 flex flex-col gap-4'>
                     <li>✅ Unlimited Startup Ideas</li>
-                    <li>✅ Join 2 Developer Teams Weekly</li>
+                    <li>✅ Send unlimited join requests</li>
                 </ul>
             </div>
             <div className='mt-12 flex justify-between'>
@@ -49,7 +52,7 @@ const page = async () => {
             <div className='border-t-1 mt-8 py-5 text-lg lg:text-xl font-bold'>
                 <ul className='mt-8 flex flex-col gap-4'>
                     <li>✅ inFound LITE</li>
-                    <li>✅ Join 5 Developer Teams Weekly</li>
+                    <li>✅ Will include upcoming features*</li>
                 </ul>
             </div>
             <div className='mt-12 flex justify-between'>
@@ -80,6 +83,9 @@ const page = async () => {
           </div>
         </div>
       </div>
+      <div className='text-gray-400 flex justify-center items-center text-md w-[60%] text-center'>
+          *You can see the upcoming features on the homepage under the Fund-A-Feature-section
+        </div>
       <div className='fixed left-100 top-15 z-0'>
         <Image src={bgImg} alt='' />
       </div>
