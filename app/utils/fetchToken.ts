@@ -1,16 +1,9 @@
 import { supabase } from "@/supabaseClient/supabase";
 
-type TokenData = {
-    id: string
-    name: string
-    token: string
-    expires_at: number
-}
-
 
 export const fetchToken = async () => {
 
-    const {data, error}: any = await supabase.from('tokens').select('*').eq('id', 'b15b6aa6-796b-4e71-81d9-81b43945af5f').single()
+    const {data, error} = await supabase.from('tokens').select('*').eq('id', 'b15b6aa6-796b-4e71-81d9-81b43945af5f').single()
 
     if (error) {
         console.log('Error fetching Token from DB')

@@ -6,13 +6,13 @@ import fetchToken from "./fetchToken"
 export const fetchPosts = async (subreddits: string[], sort: 'new' | 'top?t=day') => {
     try {
 
-        const postsToPush: any[] = [] 
+        const postsToPush: Array<{reddit_id: string, title: string, url: string, text: string, upvotes: number, post_created_at: string, comments: number, status: string, score: number, subreddit: 'string'}> = [] 
 
         const tokenData = await fetchToken()
         const access_token = tokenData.token
 
         for (const subreddit of subreddits) {
-            const response = await fetch(`https://oauth.reddit.com/r/${subreddit}/new?limit=20`, {
+            const response = await fetch(`https://oauth.reddit.com/r/${subreddit}/${sort}?limit=20`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${access_token}`,
@@ -22,9 +22,9 @@ export const fetchPosts = async (subreddits: string[], sort: 'new' | 'top?t=day'
 
             const data = await response.json()
     
-            const posts: any[] = data.data.children
+            const posts: Array<{data: {id: string, title: string, url: string, selftext: string, ups: number, created_utc: string, num_comments: number, subreddit_name_prefixed: 'string'}}> = data.data.children
   
-            posts.forEach(postData => {
+            posts!.forEach(postData => {
                 const post = {
                     reddit_id: postData.data.id,
                     title: postData.data.title,
@@ -34,7 +34,7 @@ export const fetchPosts = async (subreddits: string[], sort: 'new' | 'top?t=day'
                     post_created_at: postData.data.created_utc,
                     comments: postData.data.num_comments,
                     status: 'unprocessed',
-                    score: null,
+                    score: 0,
                     subreddit: postData.data.subreddit_name_prefixed,
                 }
                 postsToPush.push(post)

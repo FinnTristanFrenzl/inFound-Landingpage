@@ -1,6 +1,5 @@
 import React from 'react';
 import ProgressBar from './ProgressBar'
-import { UUID } from 'crypto';
 import Link from 'next/link';
 
 const FeatureCard = ({title, description, goal, current, feature_id}: {title: string, description: string, goal: number, current: number, feature_id: string}) => {

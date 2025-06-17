@@ -1,5 +1,5 @@
 // utils/formatPost.ts
-export async function formatPost(post: any) {
+export async function formatPost(post: {text: string, reddit_id: string}) {
   const API_KEY = process.env.GEMINI_API_KEY
 
 const prompt = `You are assisting in identifying actionable user needs from Reddit posts for research and product development.

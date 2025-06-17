@@ -50,7 +50,7 @@ const PageContent = () => {
         const data = await res.json()
         setClientSecret(data.clientSecret)
       })
-  }, [feature_id, type, access])
+  }, [feature_id, type, access, router, state])
 
   useEffect(() => {
     if (!clientSecret) return;

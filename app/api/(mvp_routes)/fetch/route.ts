@@ -2,13 +2,12 @@
 // Executes the fetchPosts.ts function 
 
 import { fetchPosts } from "@/app/utils/fetchPosts"
-import fetchToken from "@/app/utils/fetchToken"
 import filterPosts from "@/app/utils/filterPosts"
 import { formatPost } from "@/app/utils/formatPost"
 import { supabase } from "@/supabaseClient/supabase"
 
 
-export async function POST(req: Request, res: Request) {
+export async function POST() {
 
     const newPosts = await fetchPosts([
     'entrepreneur',
@@ -29,9 +28,6 @@ export async function POST(req: Request, res: Request) {
   ], 'new')
 
   if (!newPosts) return Response.json({Error: 'No new posts'})
-
-
-
 
   const filteredPosts = await filterPosts(newPosts)
   const {error: error1} = await supabase.from('posts').upsert(filteredPosts, {onConflict: 'title', ignoreDuplicates: true})

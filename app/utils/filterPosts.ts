@@ -1,4 +1,4 @@
-const filterPosts = async (posts: any[]) => {
+const filterPosts = async (posts: Array<{reddit_id: string, title: string, url: string, text: string, upvotes: number, post_created_at: string, comments: number, status: string, score: number, subreddit: 'string'}>) => {
   
 const relevancePatterns = [
   { pattern: /\b(is|are|was|were) there (a|any) (way|tool|method) to\b/i, weight: 3 },
@@ -43,10 +43,9 @@ const relevancePatterns = [
   { pattern: /\bthe current tools don’t help with\b/i, weight: 5 },
 ]
 
-const returnedPosts: any[] = []
+const returnedPosts: Array<{reddit_id: string, title: string, url: string, text: string, upvotes: number, post_created_at: string, comments: number, status: string, score: number, subreddit: 'string'}> = []
 posts.forEach(post => {
   let score = 0
-  let last
   let text
 
   if (!post.text || post.text === '') {

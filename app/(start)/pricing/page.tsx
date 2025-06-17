@@ -10,6 +10,8 @@ const page = async () => {
 
   const { data, error } = await supabase.auth.getUser();
 
+  if (error) return
+
   const {data: rank, error: rankError} = await supabase.from('software_access').select('type').eq('user_id', data.user?.id).single()
 
   
@@ -21,7 +23,7 @@ const page = async () => {
 
   return (
     <div className='relative min-h-screen flex flex-col justify-center items-center gap-24 bg-[#0a0c0e]'>
-        <div className='text-white flex justify-center items-center text-2xl font-bold w-[60%] text-center'>
+        <div className='text-white flex justify-center items-center text-2xl font-bold w-[60%] text-center md:mt-8 sm:mt-10'>
           inFound is currently in a beta phase. Once the initial version launches, prices will increase. If you buy now, you will keep the current price even when prices will increase!
         </div>
       <div className='size-full flex flex-col lg:flex-row justify-center items-center text-white gap-24 pb-6'>
@@ -39,7 +41,7 @@ const page = async () => {
             </div>
             <div className='mt-12 flex justify-between'>
                 <h1 className='font-bold text-3xl'>$49 <span className='text-sm'>(one time)</span></h1>
-                <Link href={'/checkout?type=software&access=PRO&id=b289407c-0e60-4f0a-84f9-26a12b81b6d8'} className='bg-white shadow-lg shadow-[#0e1725]/40 text-black font-bold py-2 px-4 w-full sm:w-[60%] md:w-[40%] rounded-2xl hover:bg-[#063d75] hover:text-white active:opacity-80 transition-all duration-150 text-center' >Get LITE!</Link>
+                <Link href={'/checkout?type=software&access=LITE&id=b289407c-0e60-4f0a-84f9-26a12b81b6d8'} className='bg-white shadow-lg shadow-[#0e1725]/40 text-black font-bold py-2 px-4 w-full sm:w-[60%] md:w-[40%] rounded-2xl hover:bg-[#063d75] hover:text-white active:opacity-80 transition-all duration-150 text-center' >Get LITE!</Link>
             </div>
           </div>
         </div>

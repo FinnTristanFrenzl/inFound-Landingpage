@@ -4,7 +4,6 @@ import { supabase } from '@/supabaseClient/supabase';
 import { createClient } from '@/lib/supabase/server';
 
 import Stripe from 'stripe';
-import { redirect } from 'next/navigation';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -12,7 +11,6 @@ export async function POST(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const type = searchParams.get('type')
-  const access = searchParams.get('access')
   const id = searchParams.get('id');
 
   if (type === 'feature') {
@@ -134,7 +132,7 @@ export async function POST(req: NextRequest) {
           ui_mode: 'embedded',
           line_items: [
             {
-              price: 'price_1RaKtKKtd9sgArFcnlr6GmBC'/*'price_1RXqkNKtd9sgArFcfLUCnpcR'*/,
+              price: 'price_1RXqkNKtd9sgArFcfLUCnpcR'/*'price_1RXqkNKtd9sgArFcfLUCnpcR'*/,
               quantity: 1,
             },
           ],

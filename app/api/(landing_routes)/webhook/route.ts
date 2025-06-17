@@ -1,8 +1,7 @@
 import Stripe from "stripe";
 import { headers } from "next/headers";
-import { NextResponse, userAgent } from "next/server";
+import { NextResponse } from "next/server";
 import { createClient } from '@supabase/supabase-js'
-import { Plane } from "lucide-react";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseSRKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -74,7 +73,7 @@ export async function POST(req: Request) {
 
       let freeCredit = false
 
-      if (session.metadata.plan_id === 'd885dfc9-4115-47c9-8257-fbc8fd215935' || session.metadata.plan_id === 'e191bd94-e519-4a95-9aac-48bd958d69ff') {
+      if (session.metadata.plan_id === 'd885dfc9-4115-47c9-8257-fbc8fd215935') {
         freeCredit = true
       }
 
