@@ -10,8 +10,6 @@ const page = async () => {
 
   const { data, error } = await supabase.auth.getUser();
 
-  if (error) return
-
   const {data: rank, error: rankError} = await supabase.from('software_access').select('type').eq('user_id', data.user?.id).single()
 
   

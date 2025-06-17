@@ -54,7 +54,7 @@ export function LoginForm({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: prov,
         options: {
-          redirectTo: `http://localhost:3000/auth/callback`,
+          redirectTo: `https://infound.app/auth/callback`,
         },
       });
       if (error) throw error;
