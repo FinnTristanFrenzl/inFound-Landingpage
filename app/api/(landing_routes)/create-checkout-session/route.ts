@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
             },
           ],
           mode: 'payment',
-          return_url: `http://localhost:3000/api/session-status?session_id={CHECKOUT_SESSION_ID}`,
+          return_url: `https://infound.app/api/session-status?session_id={CHECKOUT_SESSION_ID}`,
           automatic_tax: { enabled: true },
           metadata: {
             type: 'software',
@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
             },
           ],
           mode: 'payment',
-          return_url: `http://localhost:3000/api/session-status?session_id={CHECKOUT_SESSION_ID}`,
+          return_url: `https://infound.app/api/session-status?session_id={CHECKOUT_SESSION_ID}`,
           automatic_tax: { enabled: true },
           metadata: {
             type: 'idea',
