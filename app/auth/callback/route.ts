@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 // The client you created from the Server-Side Auth instructions
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url)
+  const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
   // if "next" is in param, use it as the redirect URL
   let next = searchParams.get('next') ?? '/'
@@ -22,7 +22,7 @@ export async function GET(request: Request) {
         // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
         return NextResponse.redirect(`https://infound.app${next}`)
       } else if (forwardedHost) {
-        return NextResponse.redirect(`https://infound.app}${next}`)
+        return NextResponse.redirect(`https://infound.app${next}`)
       } else {
         return NextResponse.redirect(`https://infound.app${next}`)
       }
