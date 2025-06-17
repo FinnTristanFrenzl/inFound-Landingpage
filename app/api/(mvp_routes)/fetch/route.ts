@@ -5,9 +5,15 @@ import { fetchPosts } from "@/app/utils/fetchPosts"
 import filterPosts from "@/app/utils/filterPosts"
 import { formatPost } from "@/app/utils/formatPost"
 import { supabase } from "@/supabaseClient/supabase"
+import { unauthorized } from "next/navigation";
+import { NextResponse } from "next/server";
 
 
-export async function POST() {
+export async function POST(req: Request, res: NextResponse) {
+
+  if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+    return NextResponse.json({status: 401, text: 'unauthorized'})
+  } 
 
     const newPosts = await fetchPosts([
     'entrepreneur',
