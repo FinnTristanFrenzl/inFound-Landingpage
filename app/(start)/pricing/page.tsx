@@ -4,7 +4,7 @@ import bgImg from '@/public/background_Image.png'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 
-const page = async () => {
+const Page = async () => {
 
   const supabase = await createClient();
 
@@ -97,4 +97,4 @@ const page = async () => {
   )
 }
 
-export default page
+export default Page
