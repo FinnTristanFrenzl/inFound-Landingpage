@@ -27,6 +27,7 @@ type Post = {
 const DashboardPage = () => {
   const [currentPosts, setCurrentPosts] = useState<Post[]>([])
   const [savedIds, setSavedIds] = useState<string[]>([])
+  const [access, setAcess] = useState<boolean>(false)
 
   const supabase = createClient()
 
@@ -38,6 +39,7 @@ const DashboardPage = () => {
 
     const res = await fetchDB(user.id)
     const posts = res?.filteredData as Post[]
+    setAcess(res?.access!)
     setCurrentPosts(posts)
 
     const { data: savedIdeas, error } = await supabase
@@ -78,7 +80,8 @@ const DashboardPage = () => {
               isSaved={savedIds.includes(post.reddit_id)}
             />
           ))}
-        {currentPosts.length > 0 && <Link className='text-green-300 font-bold bg-[rgb(28,38,56)] py-2 px-4 rounded-2xl hover:opacity-80 active:opacity-60' href={'/pricing'}>Get full access and see all ideas? Upgrade!</Link>}
+        {currentPosts.length > 0 && 
+          !access && <Link className='text-green-300 font-bold bg-[rgb(28,38,56)] py-2 px-4 rounded-2xl hover:opacity-80 active:opacity-60' href={'/pricing'}>Get full access and see all ideas? Upgrade!</Link>}
         </div>
       </div>
     </div>
