@@ -6,6 +6,7 @@ import PostCard from '@/components/PostCard';
 import bgImg from '../../../public/background_Image.png'
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
+import Link from 'next/link';
 
 type Post = {
   categories: [] | null
@@ -35,7 +36,8 @@ const DashboardPage = () => {
     } = await supabase.auth.getUser()
     if (!user) return
 
-    const posts: Post[] = await fetchDB(user.id) as Post[]
+    const res = await fetchDB(user.id)
+    const posts = res?.filteredData as Post[]
     setCurrentPosts(posts)
 
     const { data: savedIdeas, error } = await supabase
@@ -50,7 +52,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchData()
-  })
+  }, [])
 
   return (
     <div className="relative min-h-screen bg-[#0a0c0e] w-full overflow-x-hidden">
@@ -67,7 +69,7 @@ const DashboardPage = () => {
       />
 
       {/* Inhalt */}
-      <div className="relative flex justify-center px-4 py-8">
+      <div className="relative flex justify-center items-center px-4 py-8">
         <div className="w-full max-w-4xl flex flex-col gap-6 items-center z-10">
           {currentPosts.map(post => (
             <PostCard
@@ -76,6 +78,7 @@ const DashboardPage = () => {
               isSaved={savedIds.includes(post.reddit_id)}
             />
           ))}
+        {currentPosts.length > 0 && <Link className='text-green-300 font-bold bg-[rgb(28,38,56)] py-2 px-4 rounded-2xl hover:opacity-80 active:opacity-60' href={'/pricing'}>Get full access and see all ideas? Upgrade!</Link>}
         </div>
       </div>
     </div>

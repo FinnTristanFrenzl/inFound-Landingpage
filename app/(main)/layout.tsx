@@ -20,10 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     redirect("/auth/login");
   }
   
-  const {data: rank, error: rankError} = await supabase.from('software_access').select('type').eq('user_id', data.user?.id).single()
-  if (!rank?.type || rankError) {
-    redirect('/pricing')
-  }
+  
   
   return (
     <html lang="en">
