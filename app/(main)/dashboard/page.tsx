@@ -27,7 +27,7 @@ type Post = {
 const DashboardPage = () => {
   const [currentPosts, setCurrentPosts] = useState<Post[]>([])
   const [savedIds, setSavedIds] = useState<string[]>([])
-  const [access, setAcess] = useState<boolean>(false)
+  const [access, setAcess] = useState<boolean | undefined>(false)
 
   const supabase = createClient()
 
@@ -39,7 +39,7 @@ const DashboardPage = () => {
 
     const res = await fetchDB(user.id)
     const posts = res?.filteredData as Post[]
-    setAcess(res?.access!)
+    setAcess(res?.access)
     setCurrentPosts(posts)
 
     const { data: savedIdeas, error } = await supabase
